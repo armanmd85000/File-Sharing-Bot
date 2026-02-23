@@ -26,11 +26,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", ""))
 PORT = os.environ.get("PORT", "8080")
 
 #Database 
-DB_URI = os.environ.get("DATABASE_URL", "")
-DB_NAME = os.environ.get("DATABASE_NAME", "filesharexbot")
-
-if not DB_URI:
-    raise ValueError("DATABASE_URL is not set. Please provide a valid MongoDB connection string.")
+# Database feature removed as requested. DB_URI and DB_NAME are no longer used.
 
 #force sub channel id, if you want enable force sub
 FORCE_SUB_CHANNEL = int(os.environ.get("FORCE_SUB_CHANNEL", "0"))
