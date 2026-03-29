@@ -6,6 +6,7 @@ from plugins import web_server
 import pyromod.listen
 from pyrogram import Client
 from pyrogram.enums import ParseMode
+from pyrogram.errors import ChannelInvalid, PeerIdInvalid
 import sys
 from datetime import datetime
 
@@ -58,6 +59,12 @@ class Bot(Client):
             self.db_channel = db_channel
             test = await self.send_message(chat_id = db_channel.id, text = "Test Message")
             await test.delete()
+        except (ChannelInvalid, PeerIdInvalid) as e:
+            self.LOGGER(__name__).error(f"Failed to access the Database Channel (ID: {CHANNEL_ID}).")
+            self.LOGGER(__name__).error("Reason: The bot is not a member of the channel or the ID is incorrect.")
+            self.LOGGER(__name__).error("Action Required: Add the bot to the channel as an Administrator.")
+            self.LOGGER(__name__).info("\nBot Stopped. Join https://t.me/CodeXBotzSupport for support")
+            sys.exit()
         except Exception as e:
             self.LOGGER(__name__).warning(e)
             self.LOGGER(__name__).warning(f"Make Sure bot is Admin in DB Channel, and Double check the CHANNEL_ID Value, Current Value {CHANNEL_ID}")
